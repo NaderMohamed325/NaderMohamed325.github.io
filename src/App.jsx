@@ -13,6 +13,7 @@ import {
   Smartphone,
   Menu,
   X,
+  ArrowRight,
 } from 'lucide-react';
 import {
   ABOUT_HIGHLIGHTS,
@@ -39,9 +40,8 @@ const SECTION_IDS = NAV_ITEMS.map((item) => item.toLowerCase());
 function SectionHeading({ title, subtitle }) {
   return (
     <div className="text-center mb-12 sm:mb-16">
-      <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 text-white tracking-tighter">{title}</h2>
-      <div className="h-px w-24 bg-white mx-auto mb-4"></div>
-      {subtitle ? <p className="text-gray-400 text-base sm:text-lg md:text-xl tracking-wide">{subtitle}</p> : null}
+      <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-100 tracking-tight">{title}</h2>
+      <p className="mt-4 text-slate-400 text-base sm:text-lg md:text-xl">{subtitle}</p>
     </div>
   );
 }
@@ -71,65 +71,52 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
-      <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-20">
+    <div className="min-h-screen text-slate-100 relative overflow-x-hidden app-background">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
-            backgroundSize: '50px 50px',
-            transform: `translateY(${scrollY * 0.2}px)`,
-          }}
-        />
-      </div>
-
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div
-          className="absolute top-20 left-10 w-64 h-64 border border-white/10 rounded-full"
-          style={{ transform: `translate(${scrollY * 0.1}px, ${scrollY * 0.05}px)` }}
+          className="absolute -top-20 -left-20 h-80 w-80 rounded-full bg-fuchsia-500/20 blur-[90px]"
+          style={{ transform: `translate(${scrollY * 0.08}px, ${scrollY * 0.05}px)` }}
         />
         <div
-          className="absolute bottom-20 right-10 w-96 h-96 border border-white/10"
-          style={{
-            transform: `rotate(${scrollY * 0.05}deg) translate(${-scrollY * 0.1}px, ${-scrollY * 0.05}px)`,
-          }}
+          className="absolute top-1/2 -right-24 h-96 w-96 rounded-full bg-cyan-500/20 blur-[110px]"
+          style={{ transform: `translate(${-scrollY * 0.1}px, ${scrollY * 0.03}px)` }}
+        />
+        <div
+          className="absolute -bottom-24 left-1/3 h-72 w-72 rounded-full bg-violet-500/20 blur-[100px]"
+          style={{ transform: `translate(${scrollY * 0.04}px, ${-scrollY * 0.07}px)` }}
         />
       </div>
 
       <nav
         className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-black/95 backdrop-blur-xl border-b border-white/10 py-3' : 'bg-transparent py-6'
+          isScrolled
+            ? 'bg-slate-950/80 backdrop-blur-xl border-b border-white/10 py-3 shadow-[0_6px_30px_rgba(2,6,23,0.45)]'
+            : 'bg-transparent py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <button
               onClick={() => scrollToSection('home')}
-              className="text-xl sm:text-2xl font-bold text-white hover:text-gray-300 transition-all duration-300 tracking-wider"
+              className="text-xl sm:text-2xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 to-cyan-300"
             >
-              <span className="hidden sm:inline">&lt;</span>
-              NADER
-              <span className="hidden sm:inline"> /&gt;</span>
+              &lt;NADER /&gt;
             </button>
 
-            <div className="hidden md:flex gap-8 lg:gap-12">
+            <div className="hidden md:flex gap-3 lg:gap-4 rounded-full px-3 py-2 border border-white/10 bg-white/5 backdrop-blur-xl">
               {NAV_ITEMS.map((item) => {
                 const sectionId = item.toLowerCase();
                 return (
                   <button
                     key={item}
                     onClick={() => scrollToSection(sectionId)}
-                    className={`relative text-sm font-medium transition-all duration-300 group ${
-                      activeSection === sectionId ? 'text-white' : 'text-gray-400 hover:text-white'
+                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                      activeSection === sectionId
+                        ? 'bg-white text-slate-950 shadow-lg shadow-white/20'
+                        : 'text-slate-300 hover:text-white hover:bg-white/10'
                     }`}
                   >
-                    {item.toUpperCase()}
-                    <span
-                      className={`absolute -bottom-1 left-0 h-0.5 bg-white transition-all duration-300 ${
-                        activeSection === sectionId ? 'w-full' : 'w-0 group-hover:w-full'
-                      }`}
-                    ></span>
+                    {item}
                   </button>
                 );
               })}
@@ -137,26 +124,28 @@ export default function Portfolio() {
 
             <button
               onClick={() => setMobileMenuOpen((open) => !open)}
-              className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+              className="md:hidden text-white p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
 
           <div className={`md:hidden transition-all duration-300 overflow-hidden ${mobileMenuOpen ? 'max-h-96 mt-4' : 'max-h-0'}`}>
-            <div className="flex flex-col gap-4 py-4 border-t border-white/10">
+            <div className="flex flex-col gap-2 py-3 border-t border-white/10">
               {NAV_ITEMS.map((item) => {
                 const sectionId = item.toLowerCase();
                 return (
                   <button
                     key={item}
                     onClick={() => scrollToSection(sectionId)}
-                    className={`text-left px-4 py-2 rounded-lg transition-all duration-300 ${
-                      activeSection === sectionId ? 'bg-white/10 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                    className={`text-left px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                      activeSection === sectionId
+                        ? 'bg-white text-slate-950'
+                        : 'text-slate-300 hover:bg-white/10 hover:text-white'
                     }`}
                   >
-                    {item.toUpperCase()}
+                    {item}
                   </button>
                 );
               })}
@@ -167,47 +156,39 @@ export default function Portfolio() {
 
       <section id="home" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 relative">
         <div className="text-center max-w-6xl relative z-10 w-full">
-          <div className="mb-8 sm:mb-12">
-            <div className="mb-6 sm:mb-8 inline-block relative">
-              <div className="absolute inset-0 bg-white/5 blur-3xl rounded-full animate-pulse"></div>
-              <Terminal className="text-white mx-auto relative" size={60} />
-            </div>
-
-            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-4 sm:mb-6 text-white tracking-tighter leading-none">
-              NADER
-              <br className="sm:hidden" />
-              <span className="sm:inline"> </span>MOHAMED
-            </h1>
-
-            <div className="h-px w-32 sm:w-48 bg-white mx-auto mb-4 sm:mb-6"></div>
-
-            <div className="text-xl sm:text-2xl md:text-3xl mb-4 sm:mb-6 font-light tracking-widest">
-              <span className="text-white">BACKEND DEVELOPER</span>
-            </div>
-
-            <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-2 sm:mb-3 font-light max-w-3xl mx-auto px-4">
-              Building scalable server-side solutions with <span className="text-white font-medium">Spring Boot</span> &{' '}
-              <span className="text-white font-medium">NestJS</span>
-            </p>
-            <p className="text-sm sm:text-base md:text-lg text-gray-500 mb-2 sm:mb-3 px-4">
-              🚀 Learning <span className="text-white font-medium">Flutter</span> for mobile development
-            </p>
-            <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-8 sm:mb-10 px-4">
-              🎓 Computer Science Student @ Mansoura University, Egypt
-            </p>
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-cyan-300/20 bg-cyan-300/10 text-cyan-200 text-sm">
+            <Terminal size={16} />
+            Open to Backend & Full-Stack Opportunities
           </div>
 
-          <div className="flex gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 flex-wrap px-4">
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-6 tracking-tight leading-[0.95]">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-slate-100 to-cyan-300">
+              NADER MOHAMED
+            </span>
+          </h1>
+
+          <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-2 font-light max-w-3xl mx-auto px-4">
+            Building scalable server-side solutions with <span className="text-cyan-200 font-semibold">Spring Boot</span> &{' '}
+            <span className="text-fuchsia-200 font-semibold">NestJS</span>
+          </p>
+          <p className="text-sm sm:text-base md:text-lg text-slate-400 mb-2 px-4">
+            🚀 Learning <span className="text-slate-200 font-medium">Flutter</span> for mobile development
+          </p>
+          <p className="text-sm sm:text-base md:text-lg text-slate-500 mb-10 px-4">
+            🎓 Computer Science Student @ Mansoura University, Egypt
+          </p>
+
+          <div className="flex gap-3 sm:gap-4 justify-center mb-10 flex-wrap px-4">
             {socialLinks.map(({ Icon, link, label }) => (
               <a
                 key={label}
                 href={link}
                 target={label !== 'Email' ? '_blank' : undefined}
                 rel={label !== 'Email' ? 'noopener noreferrer' : undefined}
-                className="p-3 sm:p-4 bg-white/5 border border-white/10 hover:bg-white hover:text-black transition-all duration-300 hover:scale-110 group"
+                className="icon-pill"
                 aria-label={label}
               >
-                <Icon size={24} className="sm:w-7 sm:h-7" />
+                <Icon size={22} className="sm:w-6 sm:h-6" />
               </a>
             ))}
           </div>
@@ -216,39 +197,36 @@ export default function Portfolio() {
             href="https://github.com/NaderMohamed325"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-8 sm:px-10 py-3 sm:py-4 bg-white text-black hover:bg-black hover:text-white border-2 border-white font-bold text-sm sm:text-base md:text-lg transition-all duration-300 hover:scale-105 tracking-wider"
+            className="cta-button"
           >
-            VIEW MY WORK
+            View My Work <ArrowRight size={18} />
           </a>
         </div>
       </section>
 
-      <section id="about" className="min-h-screen py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative flex items-center">
+      <section id="about" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-6xl mx-auto w-full relative z-10">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-12 sm:mb-16 text-center text-white tracking-tighter">
-            ABOUT ME
-          </h2>
-          <div className="h-px w-24 bg-white mx-auto mb-12 sm:mb-16"></div>
+          <SectionHeading
+            title="ABOUT ME"
+            subtitle="I design resilient backend systems and keep expanding into mobile and distributed architectures."
+          />
 
-          <div className="border border-white/20 p-6 sm:p-8 lg:p-10 bg-white/5 backdrop-blur-sm">
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-10 leading-relaxed font-light">
+          <div className="glass-panel p-6 sm:p-8 lg:p-10">
+            <p className="text-lg sm:text-xl md:text-2xl text-slate-300 mb-8 sm:mb-10 leading-relaxed font-light">
               I'm an aspiring software engineer currently studying at Mansoura University in Egypt. My passion lies in
               building robust backend systems and exploring low-level software concepts. Currently expanding my skills
-              into mobile development with <span className="text-white font-medium">Flutter</span>.
+              into mobile development with <span className="text-cyan-200 font-medium">Flutter</span>.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
+            <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
               {aboutHighlights.map(({ Icon, title, desc }) => (
-                <div
-                  key={title}
-                  className="flex items-start gap-4 group border border-white/10 p-4 sm:p-6 hover:border-white/30 hover:bg-white/5 transition-all duration-300"
-                >
-                  <div className="p-2 sm:p-3 bg-white/10 border border-white/20 group-hover:bg-white group-hover:text-black transition-all duration-300 flex-shrink-0">
-                    <Icon size={24} />
+                <div key={title} className="feature-card">
+                  <div className="feature-icon">
+                    <Icon size={22} />
                   </div>
                   <div>
-                    <h4 className="text-lg sm:text-xl font-bold text-white mb-2 tracking-wide">{title.toUpperCase()}</h4>
-                    <p className="text-sm sm:text-base text-gray-400 leading-relaxed">{desc}</p>
+                    <h4 className="text-lg sm:text-xl font-bold text-slate-100 mb-2 tracking-wide">{title}</h4>
+                    <p className="text-sm sm:text-base text-slate-400 leading-relaxed">{desc}</p>
                   </div>
                 </div>
               ))}
@@ -257,38 +235,34 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section id="projects" className="min-h-screen py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative">
+      <section id="projects" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto relative z-10">
-          <SectionHeading title="BACKEND PROJECTS" subtitle="Real-time applications & distributed systems" />
+          <SectionHeading title="PROJECTS" subtitle="Real-time applications, APIs, and distributed backend systems." />
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
             {PROJECTS.map((project) => (
-              <div
-                key={project.title}
-                className="border border-white/20 p-6 sm:p-8 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/40 transition-all duration-300 group"
-              >
+              <div key={project.title} className="project-card">
                 <div className="flex justify-between items-start mb-6">
-                  <Database className="text-white group-hover:scale-110 transition-transform" size={32} />
+                  <div className="feature-icon">
+                    <Database size={22} />
+                  </div>
                   <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 border border-white/20 hover:bg-white hover:text-black transition-all duration-300"
+                    className="p-2 rounded-xl border border-white/20 text-slate-200 hover:text-slate-950 hover:bg-white transition-all duration-300"
                     aria-label={`View ${project.title} on GitHub`}
                   >
-                    <ExternalLink size={20} />
+                    <ExternalLink size={18} />
                   </a>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold mb-3 text-white tracking-wide">{project.title.toUpperCase()}</h3>
-                <p className="text-gray-400 mb-6 text-sm sm:text-base leading-relaxed">{project.desc}</p>
+                <h3 className="text-xl sm:text-2xl font-bold mb-3 text-slate-100">{project.title}</h3>
+                <p className="text-slate-400 mb-6 text-sm sm:text-base leading-relaxed">{project.desc}</p>
 
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 text-xs sm:text-sm border border-white/20 text-white font-mono hover:bg-white hover:text-black transition-all duration-300"
-                    >
+                    <span key={tech} className="tech-pill">
                       {tech}
                     </span>
                   ))}
@@ -299,54 +273,45 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section id="skills" className="min-h-screen py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative">
+      <section id="skills" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto relative z-10">
-          <SectionHeading title="TECH STACK" subtitle="Backend frameworks, languages & tools" />
+          <SectionHeading title="TECH STACK" subtitle="Frameworks, languages, data stores, and tools I use in production workflows." />
 
-          <div className="flex flex-wrap gap-3 sm:gap-4 justify-center">
+          <div className="glass-panel p-6 sm:p-8 flex flex-wrap gap-3 sm:gap-4 justify-center">
             {SKILLS.map((skill) => (
-              <div
-                key={skill}
-                className="px-4 sm:px-6 py-2 sm:py-3 border border-white/20 bg-white/5 hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group"
-              >
-                <span className="text-sm sm:text-base font-mono font-semibold tracking-wide">{skill}</span>
+              <div key={skill} className="tech-pill text-sm sm:text-base font-semibold">
+                {skill}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="contact" className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 relative">
-        <div className="text-center max-w-4xl relative z-10 w-full">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 sm:mb-8 text-white tracking-tighter">
-            LET'S BUILD SOMETHING
-          </h2>
-          <div className="h-px w-24 bg-white mx-auto mb-8 sm:mb-12"></div>
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-10 sm:mb-12 leading-relaxed font-light px-4">
+      <section id="contact" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 relative">
+        <div className="max-w-4xl mx-auto text-center relative z-10 glass-panel p-8 sm:p-12">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight text-slate-100">Let's Build Something</h2>
+          <p className="text-lg sm:text-xl md:text-2xl text-slate-300 mb-10 leading-relaxed font-light">
             Need a backend developer? Let's discuss your next project and create robust solutions together.
           </p>
 
-          <div className="flex gap-4 sm:gap-6 justify-center flex-wrap px-4">
-            <a
-              href="mailto:nnader@std.mans.edu.eg"
-              className="px-6 sm:px-10 py-3 sm:py-4 bg-white text-black hover:bg-black hover:text-white border-2 border-white font-bold text-sm sm:text-base md:text-lg transition-all duration-300 hover:scale-105 tracking-wider"
-            >
-              EMAIL ME
+          <div className="flex gap-4 sm:gap-6 justify-center flex-wrap">
+            <a href="mailto:nnader@std.mans.edu.eg" className="cta-button">
+              Email Me
             </a>
             <a
               href="https://www.linkedin.com/in/nadermohamed325"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 sm:px-10 py-3 sm:py-4 border-2 border-white text-white hover:bg-white hover:text-black font-bold text-sm sm:text-base md:text-lg transition-all duration-300 hover:scale-105 tracking-wider"
+              className="outline-button"
             >
-              LINKEDIN
+              LinkedIn
             </a>
           </div>
         </div>
       </section>
 
-      <footer className="py-8 sm:py-10 text-center border-t border-white/20 bg-black relative z-10">
-        <p className="text-gray-500 text-xs sm:text-sm font-mono tracking-wider px-4">
+      <footer className="py-8 sm:py-10 text-center border-t border-white/10 bg-slate-950/40 relative z-10">
+        <p className="text-slate-500 text-xs sm:text-sm font-mono tracking-wider px-4">
           © 2025 NADER MOHAMED • BACKEND DEVELOPER • MANSOURA UNIVERSITY
         </p>
       </footer>
